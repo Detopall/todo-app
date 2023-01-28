@@ -7,6 +7,8 @@ document.addEventListener('click', (e) => {
         createTodo(e);
     } else if (e.target.matches(".finish-button")){
 		finishTodo(e);
+	} else if (e.target.matches(".change-contents")){
+		changeContents(e);
 	}
 });
 
@@ -67,4 +69,9 @@ function getPutFinishToDoOptions(){
 			'Accept': '*/*'
 		}
 	}
+}
+
+
+function changeContents(e){
+	console.log("contents will now be changing");
 }
