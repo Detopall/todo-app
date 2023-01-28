@@ -38,3 +38,14 @@ function getPutChangeTodoOptions(){
 		})
 	}
 }
+
+function getDeleteTodoOptions(){
+	return {
+		method: 'DELETE',
+		headers: {
+			'Accept': '*/*'
+		}
+	}
+}
+
+

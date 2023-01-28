@@ -40,6 +40,11 @@ exports.changeContents = async (req, res) => {
 		{'_id': id},
 		{$set: {'title': title, 'text': text}});
 	res.send({data: modificationResult});
+}
 
+exports.removeTodo = async (req, res) => {
+	const id = req.params.id;
+	const removedResult = await Todo.findByIdAndRemove(id);
+	res.send({data: removedResult});
 }
 

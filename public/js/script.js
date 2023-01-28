@@ -2,18 +2,22 @@
 
 const URI = "http://localhost:3000";
 
+const handlers = {
+    'button#create': createTodo,
+    '.finish-button': finishTodo,
+    '.change-contents': showChangingOfContentFields,
+    '#change-contents': changeContents,
+    '#cancel': removeChangeField,
+    '.delete-todo': deleteTodo
+};
+
 document.addEventListener('click', (e) => {
-    if (e.target.matches('button#create')) {
-        createTodo(e);
-    } else if (e.target.matches(".finish-button")){
-		finishTodo(e);
-	} else if (e.target.matches(".change-contents")) {
-		showChangingOfContentFields(e);
-	} else if (e.target.matches("#change-contents")){
-		changeContents(e);
-	} else if (e.target.matches("#cancel")){
-		removeChangeField(e);
-	}
+    for (const selector in handlers) {
+        if (e.target.matches(selector)) {
+            handlers[selector](e);
+            break;
+        }
+    }
 });
 
 
@@ -69,5 +73,11 @@ function removeChangeField(e){
 async function changeContents(e){
 	const id = localStorage.getItem("todo-id-change");
 	await fetch(`${URI}/todo/${id}/change`, getPutChangeTodoOptions());
+	location.reload();
+}
+
+async function deleteTodo(e){
+	const id = e.target.getAttribute("data-delete-id");
+	await fetch(`${URI}/todo/${id}`, getDeleteTodoOptions());
 	location.reload();
 }
