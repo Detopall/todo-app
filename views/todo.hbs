@@ -1,0 +1,43 @@
+
+<section id="todo">
+	<h2> ToDo </h2>
+	<div id="main">
+		<div id="unfinished">
+			<h3>Unfinished</h3>
+			{{#each todos as |todo| }}
+				{{#unless todo.completed}}
+					<div>
+						<h3>- {{todo.title}} </h3>
+						<p> {{todo.text}} </p>
+						<button id="{{todo._id}}" class="finish-button" type="button">&#10004;</button>
+					</div>
+				{{/unless}}
+			{{/each}}
+		</div>
+
+		<div id="finished">
+			<h3>Finished</h3>
+			{{#each todos as |todo| }}
+				{{#if todo.completed}}
+					<div id="{{todo._id}}">
+						<h3>- {{todo.title}} </h3>
+						<p> {{todo.text}} </p>
+					</div>
+				{{/if}}
+			{{/each}}
+		</div>
+
+	<div id="create-todo">
+		<h3> Create your ToDo </h3>
+		<form>
+			<label for="title">Title:</label>
+			<input id="title" type="text" required>
+			
+			<label for="text">Text:</label>
+			<input id="text" type="text" required>
+
+			<button id="create" type="button">Create</button>	
+		</form>
+	</div>
+	</div>
+</section>

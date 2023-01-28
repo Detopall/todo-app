@@ -1,0 +1,27 @@
+const Todo = require("../models/ToDo");
+
+exports.findTodo = async (req, res) => {
+	try {
+		let todos = await Todo.find().lean();
+		res.render('todo', {
+			todos: todos
+		});
+		console.log(todos);
+	} catch (err){
+		console.error(err);
+	}
+}
+
+exports.createTodo = async (req, res) => {
+	const todo = new Todo(req.body);
+	await todo.save();
+	res.send({data: todo});
+}
+
+
+exports.finishTodo = async (req, res) => {
+	const id = req.params.id;
+	const modificationResult = await Todo.updateOne({'_id': id},
+	{$set :{'completed': true}});
+	res.send({data: modificationResult});
+}
