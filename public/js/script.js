@@ -1,5 +1,5 @@
 "use strict";
-const PATH_IDs = ["#home", "#todo"];
+
 const URI = "http://localhost:3000";
 
 document.addEventListener('click', (e) => {
@@ -7,51 +7,20 @@ document.addEventListener('click', (e) => {
         createTodo(e);
     } else if (e.target.matches(".finish-button")){
 		finishTodo(e);
-	} else if (e.target.matches(".change-contents")){
+	} else if (e.target.matches(".change-contents")) {
+		showChangingOfContentFields(e);
+	} else if (e.target.matches("#change-contents")){
 		changeContents(e);
+	} else if (e.target.matches("#cancel")){
+		removeChangeField(e);
 	}
 });
 
-
-findPage();
-
-function findPage(){
-	const allPaths = document.querySelectorAll("nav ul li a");
-	allPaths.forEach(el => {
-		if (el.getAttribute("href") === window.location.pathname){
-			setCurrentPageClass(el);
-		};
-	});
-}
-
-function setCurrentPageClass(activeElement){
-	PATH_IDs.forEach(element => {
-		document.querySelector(element).classList.remove("active");
-	});
-	activeElement.classList.add("active");
-}
 
 async function createTodo(e){
 	const fetched = await fetch(`${URI}/todo`, getPostToDoOptions());
 	await fetched.json();
 	location.reload();
-}
-
-
-function getPostToDoOptions(){
-	return {
-		method: 'POST',
-		body: JSON.stringify({
-			"user": "Denis",
-			"title": document.querySelector("#title").value,
-			"text": document.querySelector("#text").value,
-			"completed": false
-		}),
-		headers: {
-			'Accept': '*/*',
-    		'Content-Type': 'application/json'
-		}
-	}
 }
 
 
@@ -62,16 +31,43 @@ async function finishTodo(e){
 }
 
 
-function getPutFinishToDoOptions(){
-	return {
-		method: 'PUT',
-		headers: {
-			'Accept': '*/*'
-		}
-	}
+function showChangingOfContentFields(e){
+	if (localStorage.getItem("changing-todo") === true) return;
+	// if exists and if === true are different
+	localStorage.setItem("changing-todo", true);
+
+	localStorage.setItem("todo-id-change", e.target.getAttribute("data-todo-id"));
+	injectUpdateFieldToHTML();
+
 }
 
+function injectUpdateFieldToHTML(){
+	const unfinished = document.querySelector("#unfinished");
+	const html = `
+	<div id="change-todo">
+		<h3> Change your ToDo </h3>
+		<form>
+			<label for="change-title">Title:</label>
+			<input id="change-title" type="text" required>
+			
+			<label for="change-text">Text:</label>
+			<input id="change-text" type="text" required>
 
-function changeContents(e){
-	console.log("contents will now be changing");
+			<button id="change-contents" data-todo-id="${localStorage.getItem("todo-id-change")}" type="button">Change</button>
+			<button id="cancel" type="button"> Cancel </button>
+		</form>
+	</div>
+	`;
+	unfinished.insertAdjacentHTML("afterend", html);
+}
+
+function removeChangeField(e){
+	localStorage.setItem("changing-todo", false);
+	document.querySelector("#change-todo").remove();
+}
+
+async function changeContents(e){
+	const id = localStorage.getItem("todo-id-change");
+	await fetch(`${URI}/todo/${id}/change`, getPutChangeTodoOptions());
+	location.reload();
 }

@@ -10,6 +10,7 @@
 						<h3>- {{todo.title}} </h3>
 						<p> {{todo.text}} </p>
 						<button id="{{todo._id}}" class="finish-button" type="button">&#10004;</button>
+				<button class="change-contents" data-todo-id={{todo._id}}> &#9998; </button>
 					</div>
 				{{/unless}}
 			{{/each}}
