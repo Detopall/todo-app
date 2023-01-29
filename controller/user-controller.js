@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+const bcrypt = require('bcryptjs');
 
 exports.createUser = async (req, res) => {
 	if (await usernameAlreadyExists(req)) return;
@@ -15,7 +15,15 @@ async function usernameAlreadyExists(req){
 }
 
 exports.loginUser = async (req, res) => {
+	if (!await usernameAlreadyExists(req)) return;
+	if (!await validPassword(req)) return;
+	console.log(`${req.body.username} is logged in`);
+	res.render("index");
+}
 
+async function validPassword(req){
+	const user = await User.find({"username": req.body.username}).lean();
+	return bcrypt.compareSync(req.body.password, user[0].password);
 }
 
 

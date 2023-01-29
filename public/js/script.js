@@ -9,7 +9,8 @@ const handlers = {
     '#change-contents': changeContents,
     '#cancel': removeChangeField,
     '.delete-todo': deleteTodo,
-	'#register': registerUser
+	'#register': registerUser,
+	"#login": loginUser
 };
 
 document.addEventListener('click', (e) => {

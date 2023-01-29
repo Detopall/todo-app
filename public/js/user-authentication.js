@@ -5,3 +5,7 @@ async function registerUser(e){
 	location.replace(`${URI}/home`);
 }
 
+async function loginUser(e){
+	await fetch(`${URI}/login`, getLoginOptions());
+	location.replace(`${URI}/home`);
+}
