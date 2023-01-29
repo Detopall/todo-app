@@ -4,7 +4,7 @@ function getPostToDoOptions(){
 	return {
 		method: 'POST',
 		body: JSON.stringify({
-			"user": "Denis",
+			"user": getUser(),
 			"title": document.querySelector("input#title").value,
 			"text": document.querySelector("input#text").value,
 			"completed": false
@@ -14,6 +14,10 @@ function getPostToDoOptions(){
     		'Content-Type': 'application/json'
 		}
 	}
+}
+
+function getUser(){
+	return localStorage.getItem('user') ? localStorage.getItem('user') : 'Guest';
 }
 
 function getPutFinishToDoOptions(){

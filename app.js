@@ -2,9 +2,7 @@ require("dotenv").config({path: './config/config.env'});
 const express = require("express");
 const connectDB = require("./config/db");
 const morgan = require("morgan");
-const Handlebars = require('handlebars');
 const exphbs = require("express-handlebars");
-const {allowInsecurePrototypeAccess} = require("@handlebars/allow-prototype-access");
 const path = require("path");
 
 const app = express();
@@ -16,7 +14,7 @@ if (process.env.NODE_ENV === "development"){
 }
 app.use(express.json());
 
-app.engine('.hbs', exphbs.engine({defaultLayout: "main", extname: ".hbs", handlebars: allowInsecurePrototypeAccess(Handlebars)}));
+app.engine('.hbs', exphbs.engine({defaultLayout: "main", extname: ".hbs"}));
 app.set('view engine', '.hbs');
 
 app.use('/', require('./routes/index'));
