@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Unbounded&display=swap');
 
 body {
-	margin: 0;
+	margin-left: 1.5rem;
+	margin-right: 1.5rem;
 	background-color: orange;
 	font-family: 'Unbounded', cursive;
 	width: 100vw;
