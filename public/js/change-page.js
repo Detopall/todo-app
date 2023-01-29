@@ -1,6 +1,6 @@
 "use strict";
 
-const PATH_IDs = ["#home", "#todo"];
+const PATH_IDs = ["#home", "#todo", "#auth"];
 findPage();
 
 function findPage(){

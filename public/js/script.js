@@ -8,7 +8,8 @@ const handlers = {
     '.change-contents': showChangingOfContentFields,
     '#change-contents': changeContents,
     '#cancel': removeChangeField,
-    '.delete-todo': deleteTodo
+    '.delete-todo': deleteTodo,
+	'#register': registerUser
 };
 
 document.addEventListener('click', (e) => {

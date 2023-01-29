@@ -49,3 +49,16 @@ function getDeleteTodoOptions(){
 }
 
 
+function getRegisterOptions(){
+	return {
+		method: 'POST',
+		body: JSON.stringify({
+			"username": document.querySelector("#username").value,
+			"password": document.querySelector("#password").value,
+		}),
+		headers: {
+			'Accept': '*/*',
+    		'Content-Type': 'application/json'
+		}
+	}
+}
